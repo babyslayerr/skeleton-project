@@ -63,7 +63,7 @@
 						"post"
 					]
 				},
-				"description": "`/api/post`\n\n요청바디\n\n``` json\n{\n\"subject\":\"제목\",\n\"content\":\"작성내용\",\n\"author\":\"작성자명\",\n\"postPassword\":\"123\"\n}\n\n ```\n\n응답\n\n``` json\n{\n\"status\":\"OK\",\n\"code\":200\n}\n\n ```"
+				"description": "`/api/post`\n\n요청바디\n\n``` json\n{\n\"subject\":\"제목\",\n\"content\":\"작성내용\",\n\"author\":\"작성자명\",\n\"postPassword\":\"123\"\n}\n\n ```\n\n응답\n\n``` json\n{\n\"message\":\"OK\",\n\"code\":200\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -104,7 +104,49 @@
 						"{id}"
 					]
 				},
-				"description": "`/api/post/{id}`\n\n요청(쿼리파라미터)\n\n`portPassword=123`\n\n응답\n\n``` json\n{\n\"status\":\"OK\",\n\"code\":\"200\"\n}\n\n ```"
+				"description": "`/api/post/{id}`\n\n요청(쿼리파라미터)\n\n`portPassword=123`\n\n응답\n\n``` json\n{\n\"message\":\"OK\",\n\"code\":\"200\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "회원가입",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				},
+				"description": "/api/auth/signup\n\n요청바디\n\n`{`\n\n`\"username\":\"whd123\",`\n\n`\"password\":\"whd12235\",`\n\n`}`\n\n응답바디\n\n`{`\n\n`\"code\":\"200\",`\n\n`\"message\":\"OK\"`\n\n`}`"
+			},
+			"response": []
+		},
+		{
+			"name": "로그인",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				},
+				"description": "/api/auth/login\n\n요청바디\n\n`{`\n\n`\"username\":\"whd123\",`\n\n`\"password\":\"whd12235\",`\n\n`}`\n\n응답헤더\n\n`Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiaW4xMjM0IiwiZXhwIjoxNjY5ODcwNDUyLCJpYXQiOjE2Njk4NjY4NTJ9.mm8wgaV8M70hidhPX4Ut6UONZGaxjA1KnOJT1mO59Xc`\n\n응답바디\n\n`{`\n\n`\"code\":\"200\",`\n\n`\"message\":\"OK\"`\n\n`}`"
 			},
 			"response": []
 		}
