@@ -1,15 +1,12 @@
 package com.example.hanghaeprestudy.posts;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Map;
 
-class PostRepository {
+@Repository
+interface PostRepository extends JpaRepository<Post, Long> {
 
-    private Long id = 0L;
-    private Map<Long, Post> persistence = new HashMap<>();
-
-    public void save(Post post) {
-        post.assignId(++id);
-        persistence.put(post.getId(), post);
-    }
 }
