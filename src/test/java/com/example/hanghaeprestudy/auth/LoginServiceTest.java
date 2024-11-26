@@ -6,31 +6,35 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import jakarta.persistence.Access;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.RSAPrivateKeySpec;
 
+@SpringBootTest
 public class LoginServiceTest {
 
+    @Autowired
     private AuthService authService;
 
-    @BeforeEach
-    void setUp(){
-        this.authService = new AuthService(new MemberRepository());
-    }
 
     @Test
+    @Transactional
     void 로그인테스트(){
 
         // given
         String username = "username";
         String password = "password";
-        authService.postMember(username,password);
+        AddMemberRequest addMemberRequest = new AddMemberRequest(username, password);
+        authService.postMember(addMemberRequest);
 
         // when
         PostLoginResponse postLoginResponse = authService.login(username, password);

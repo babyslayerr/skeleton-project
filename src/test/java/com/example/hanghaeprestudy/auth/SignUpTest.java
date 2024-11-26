@@ -1,40 +1,40 @@
 package com.example.hanghaeprestudy.auth;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class SignUpTest {
 
+    @Autowired
     private AuthService authService;
-    private MemberRepository memberRepository;
-
-    @BeforeEach
-    void setUp(){
-        this.memberRepository = new MemberRepository();
-        this.authService = new AuthService(memberRepository);
-    }
 
     @Test
+    @Transactional
     void 회원저장테스트(){
-
-        String username = "username";
-        String password = "password";
-        new AddMemberRequest(username,password);
-        authService.postMember(username, password);
+        authService.postMember(getAddMemberRequest());
     }
 
     @Test
+    @Transactional
     void 중복회원저장테스트(){
 
-        String username = "username";
-        String password = "password";
-        authService.postMember(username, password);
+        authService.postMember(getAddMemberRequest());
 
         Assertions.assertThrows(DupliUsernameException.class,
                 () ->
-                    authService.postMember(username, password)
+                    authService.postMember(getAddMemberRequest())
                 );
+    }
+
+    private static AddMemberRequest getAddMemberRequest() {
+        String username = "username";
+        String password = "password";
+        AddMemberRequest addMemberRequest = new AddMemberRequest(username, password);
+        return addMemberRequest;
     }
 
 }

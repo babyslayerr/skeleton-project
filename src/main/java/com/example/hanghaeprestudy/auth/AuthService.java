@@ -1,5 +1,8 @@
 package com.example.hanghaeprestudy.auth;
 
+import org.springframework.stereotype.Component;
+
+@Component
 class AuthService {
 
     private MemberRepository memberRepository;
@@ -8,16 +11,16 @@ class AuthService {
         this.memberRepository = memberRepository;
     }
 
-    public void postMember(String username, String password) {
-        Member member = new Member(username, password);
-        if (memberRepository.findByUsername(username) != null) {
-            throw new DupliUsernameException();
-        }
-        memberRepository.save(member);
-    }
-
     public PostLoginResponse login(String username, String password) {
         Member member = memberRepository.findByUsernameAndPassword(username,password);
         return member!=null?new PostLoginResponse(member.getUsername(),member.getPassword()):null;
+    }
+
+    public void postMember(AddMemberRequest addMemberRequest) {
+        Member member = new Member(addMemberRequest.username(), addMemberRequest.password());
+        if (memberRepository.findByUsername(addMemberRequest.username()) != null) {
+            throw new DupliUsernameException();
+        }
+        memberRepository.save(member);
     }
 }
