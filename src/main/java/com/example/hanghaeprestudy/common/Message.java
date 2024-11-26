@@ -1,4 +1,4 @@
-package com.example.hanghaeprestudy.posts;
+package com.example.hanghaeprestudy.common;
 
 import lombok.Data;
 

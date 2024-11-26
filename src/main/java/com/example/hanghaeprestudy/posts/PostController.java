@@ -1,5 +1,6 @@
 package com.example.hanghaeprestudy.posts;
 
+import com.example.hanghaeprestudy.common.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
