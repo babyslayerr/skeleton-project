@@ -15,4 +15,9 @@ class AuthService {
         }
         memberRepository.save(member);
     }
+
+    public PostLoginResponse login(String username, String password) {
+        Member member = memberRepository.findByUsernameAndPassword(username,password);
+        return member!=null?new PostLoginResponse(member.getUsername(),member.getPassword()):null;
+    }
 }

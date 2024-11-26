@@ -19,4 +19,11 @@ class MemberRepository {
         }
         return null;
     }
+
+    public Member findByUsernameAndPassword(String username, String password) {
+        for (Member member : map.values()) {
+            if (member.getUsername().equals(username) && member.getPassword().equals(password)) return member;
+        }
+        return null;
+    }
 }
