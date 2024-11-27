@@ -46,10 +46,25 @@ public class LoginServiceTest {
     @Test
     void 토큰생성테스트(){
 
-        PublicKey publicKey= null;
-        PrivateKey privateKey = null;
-        try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+    }
+
+    class TokenUtil {
+        static PublicKey publicKey= null;
+        static PrivateKey privateKey = null;
+
+        static KeyPairGenerator keyPairGenerator;
+
+        static {
+            try {
+                keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        static Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) publicKey, (RSAPrivateKey) privateKey);
+
+        static String createToken(){
 
             keyPairGenerator.initialize(2048);
 
@@ -57,34 +72,33 @@ public class LoginServiceTest {
             publicKey = keyPair.getPublic();
             privateKey = keyPair.getPrivate();
 
-            Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) publicKey, (RSAPrivateKey) privateKey);
+
             String token = JWT.create()
                     .withClaim("key","value")
                     .withIssuer("auth0")
                     .sign(algorithm);
+            return token;
+        }
 
-            DecodedJWT decodedJWT;
-
-            JWTVerifier verifier = JWT.require(algorithm)
-                    // specify any specific claim validations
-                    .withIssuer("auth0")
-                    // reusable verifier instance
-                    .build();
-
-            decodedJWT = verifier.verify(token);
+        static void decodeToken(String token){
 
 
-            System.out.println(decodedJWT.getClaim("key"));
+                DecodedJWT decodedJWT;
+
+                JWTVerifier verifier = JWT.require(algorithm)
+                        // specify any specific claim validations
+                        .withIssuer("auth0")
+                        // reusable verifier instance
+                        .build();
+
+                decodedJWT = verifier.verify(token);
+
+
+                System.out.println(decodedJWT.getClaim("key"));
+
 
         }
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }catch (JWTCreationException exception){
-            // Invalid Signing configuration / Couldn't convert Claims.
-        }
-        catch (JWTVerificationException exception){
-            // Invalid signature/claims
-        }
+
 
     }
 }
