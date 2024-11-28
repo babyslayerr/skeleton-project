@@ -8,6 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import jakarta.persistence.Access;
 import jakarta.transaction.Transactional;
+import org.antlr.v4.runtime.Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,8 @@ public class LoginServiceTest {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private TokenUtil tokenUtil;
 
     @Test
     @Transactional
@@ -44,61 +47,11 @@ public class LoginServiceTest {
     }
 
     @Test
-    void 토큰생성테스트(){
+    void 토큰테스트(){
+
+        String token = tokenUtil.createToken();
+        tokenUtil.decodeToken(token);
 
     }
 
-    class TokenUtil {
-        static PublicKey publicKey= null;
-        static PrivateKey privateKey = null;
-
-        static KeyPairGenerator keyPairGenerator;
-
-        static {
-            try {
-                keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        static Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) publicKey, (RSAPrivateKey) privateKey);
-
-        static String createToken(){
-
-            keyPairGenerator.initialize(2048);
-
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
-            publicKey = keyPair.getPublic();
-            privateKey = keyPair.getPrivate();
-
-
-            String token = JWT.create()
-                    .withClaim("key","value")
-                    .withIssuer("auth0")
-                    .sign(algorithm);
-            return token;
-        }
-
-        static void decodeToken(String token){
-
-
-                DecodedJWT decodedJWT;
-
-                JWTVerifier verifier = JWT.require(algorithm)
-                        // specify any specific claim validations
-                        .withIssuer("auth0")
-                        // reusable verifier instance
-                        .build();
-
-                decodedJWT = verifier.verify(token);
-
-
-                System.out.println(decodedJWT.getClaim("key"));
-
-
-        }
-
-
-    }
 }
