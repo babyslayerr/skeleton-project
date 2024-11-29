@@ -37,10 +37,11 @@ public class TokenUtil {
 
     private Algorithm algorithm;
 
-    String createToken() {
+    String createToken(PostLoginResponse postLoginResponse) {
 
         String token = JWT.create()
                 .withIssuer("hanghae")
+                .withClaim("username",postLoginResponse.username())
                 .sign(algorithm);
         return token;
     }

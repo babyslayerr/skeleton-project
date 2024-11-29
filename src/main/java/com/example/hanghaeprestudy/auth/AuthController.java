@@ -47,7 +47,7 @@ public class AuthController {
         message.setSuccess();
         message.setData(postLoginResponse);
 
-        String token = tokenUtil.createToken();
+        String token = tokenUtil.createToken(postLoginResponse);
         Cookie authorizationCookie = new Cookie("Authorization", token);
         response.addCookie(authorizationCookie);
         return new ResponseEntity(message,HttpStatus.OK);

@@ -33,7 +33,8 @@ public class SignUpTest {
     private static AddMemberRequest getAddMemberRequest() {
         String username = "username";
         String password = "password";
-        AddMemberRequest addMemberRequest = new AddMemberRequest(username, password);
+        ROLE role = ROLE.USER;
+        AddMemberRequest addMemberRequest = new AddMemberRequest(username, password, role);
         return addMemberRequest;
     }
 

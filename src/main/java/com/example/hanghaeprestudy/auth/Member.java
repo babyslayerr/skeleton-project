@@ -19,11 +19,12 @@ class Member {
 
     private String username;
     private String password;
+    private ROLE role;
 
-
-    public Member(String username, String password) {
+    public Member(String username, String password, ROLE role) {
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
     public void assignId(Long id) {

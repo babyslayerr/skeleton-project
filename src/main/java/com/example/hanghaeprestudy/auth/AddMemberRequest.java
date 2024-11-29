@@ -4,7 +4,7 @@ import org.springframework.util.Assert;
 
 import java.util.regex.Pattern;
 
-record AddMemberRequest(String username, String password) {
+record AddMemberRequest(String username, String password,ROLE role) {
     AddMemberRequest {
         // username 이 정규표현식이랑 동일한지 확인
         Assert.hasText(username, "username must not be empty");

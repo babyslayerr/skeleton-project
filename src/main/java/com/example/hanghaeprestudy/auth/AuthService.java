@@ -17,7 +17,7 @@ class AuthService {
     }
 
     public void postMember(AddMemberRequest addMemberRequest) {
-        Member member = new Member(addMemberRequest.username(), addMemberRequest.password());
+        Member member = new Member(addMemberRequest.username(), addMemberRequest.password(),addMemberRequest.role());
         if (memberRepository.findByUsername(addMemberRequest.username()) != null) {
             throw new DupliUsernameException();
         }
