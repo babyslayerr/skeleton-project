@@ -1,9 +1,6 @@
 package com.example.hanghaeprestudy.auth;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +16,7 @@ class Member {
 
     private String username;
     private String password;
+    @Enumerated(EnumType.STRING)
     private ROLE role;
 
     public Member(String username, String password, ROLE role) {
