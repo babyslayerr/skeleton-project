@@ -1,83 +1,44 @@
 package com.example.hanghaeprestudy.comments;
 
+import com.example.hanghaeprestudy.posts.AddPostRequest;
+import com.example.hanghaeprestudy.posts.Post;
+import com.example.hanghaeprestudy.posts.PostService;
+import com.example.hanghaeprestudy.posts.PostServiceTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
+@SpringBootTest
 public class CommentServiceTest {
 
+    @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private PostService postService;
 
-    @BeforeEach
-    void setup(){
-
-        commentService = new CommentService(new CommentRepository());
-    }
 
     @Test
     void 댓글저장테스트(){
+
+        // given
+        // 부모 게시글 저장
+        postService.savePost(getAddPostRequest());
+        // postId는 위에서 받아와야함 refactoring 예정
         Long postId = 1L;
         String content = "댓글 내용";
         String author = "작성자";
         commentService.postComment(postId, content, author);
     }
 
-
-    private class CommentService {
-
-        private CommentRepository commentRepository;
-
-        public CommentService(CommentRepository commentRepository) {
-            this.commentRepository = commentRepository;
-        }
-
-        public void postComment(Long postId, String content, String author) {
-
-            Comment comment = new Comment(postId,content,author);
-
-            commentRepository.save(comment);
-
-        }
+    private static AddPostRequest getAddPostRequest() {
+        String subject = "제목";
+        String content = "내용";
+        String author = "작성자명";
+        String postPassword = "12345";
+        return new AddPostRequest(subject, content, author, postPassword);
     }
 
-    private class Comment {
 
-        private Long id;
-        private final Long postId;
-        private final String content;
-        private final String author;
-
-
-        public Comment(Long postId, String content, String author) {
-            Assert.notNull(postId, "게시글 ID는 필수입니다.");
-            Assert.hasText(content, "게시글 내용은 필수입니다.");
-            Assert.hasText(author, "작성자는 필수 입니다.");
-            this.postId = postId;
-            this.content = content;
-            this.author = author;
-        }
-
-        public void assignId(Long id) {
-            this.id = id;
-        }
-
-        public Long getId() {
-            return this.id;
-        }
-    }
-
-    private class CommentRepository {
-        private Long sequence = 0L;
-        Map<Long, Comment> map = new HashMap<>();
-
-        public void save(Comment comment) {
-            comment.assignId(++sequence);
-            map.put(comment.getId(), comment);
-        }
-    }
 }
