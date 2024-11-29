@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-class PostService {
+public class PostService {
     private final PostRepository postRepository;
 
     PostService(PostRepository postRepository) {

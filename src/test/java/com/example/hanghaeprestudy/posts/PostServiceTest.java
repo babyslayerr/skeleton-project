@@ -27,6 +27,7 @@ public class PostServiceTest {
     }
 
     @Test
+    @Transactional
     void 게시글작성(){
         AddPostRequest request = getAddPostRequest();
         postService.savePost(request);

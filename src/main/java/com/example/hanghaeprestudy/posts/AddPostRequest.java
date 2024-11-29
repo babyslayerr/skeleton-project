@@ -4,7 +4,7 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 
-record AddPostRequest(String subject, String content, String author,  String postPassword) {
+public record AddPostRequest(String subject, String content, String author, String postPassword) {
     public AddPostRequest {
         Assert.hasText(subject, "제목이 있어야 합니다.");
         Assert.hasText(content, "내용이 있어야 합니다.");
