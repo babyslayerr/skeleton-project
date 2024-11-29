@@ -35,6 +35,8 @@ public class LoginServiceTest {
 
     @Test
     void 토큰테스트(){
+        // 토근에 이름을 담기위해 필요한 로그인 결과 객체
+        PostLoginResponse postLoginResponse = new PostLoginResponse("username", "password");
 
         String token = tokenUtil.createToken(postLoginResponse);
         tokenUtil.decodeToken(token);

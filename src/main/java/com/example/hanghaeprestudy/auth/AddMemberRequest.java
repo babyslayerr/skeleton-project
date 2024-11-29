@@ -14,5 +14,8 @@ record AddMemberRequest(String username, String password,ROLE role) {
         Assert.hasText(password, "password must not be empty");
         String passwordRegex = "^[a-zA-Z0-9]{4,15}$";
         Assert.isTrue(Pattern.matches(passwordRegex, password), "사용할 수 없는 username 패턴입니다.");
+            
+        // 기본값 유저
+        if(role == null) role = ROLE.USER;
     }
 }
